@@ -6,7 +6,7 @@ import { jwtEncode } from "../utils/jwtToken";
 
 class AuthServices {
     processPass(userObject: {
-        account: string;
+        account: string;   
         password: string;
     }) {
         const decryptedResult = decrypt(userObject.password);
