@@ -133,7 +133,7 @@ router.post("/send-code-reset-pass", async_handle(async (req, res) => {
             }
         }).exec(),
         sendMailService.sendMailWithMailjet({
-            fromEmail: "hungnguyen13.t@gmail.com",
+            fromEmail: process.env.EMAIL_SUPPORT || "hungnguyen13.t@gmail.com",
             toEmail: user.email,
             content: `<div style="color: black;">
                 <h2>Đây là mã code của bạn : </h2>
