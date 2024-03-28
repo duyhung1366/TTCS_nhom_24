@@ -9,6 +9,7 @@ import async_handle from "../../utils/async_handle";
 import { generateCode } from "../../utils/generateCode";
 import { jwtEncode } from "../../utils/jwtToken";
 import { jwtMiddleware } from "./middleware";
+import logger from "../../utils/logger";
 
 const sendMailService = new SendMailService();
 const router = Router();
@@ -111,10 +112,11 @@ router.post("/send-code-reset-pass", async_handle(async (req, res) => {
     const queryUser: any[] = []
     if (typeof account !== "undefined") queryUser.push({ account })
     if (typeof email !== "undefined") queryUser.push({ email })
-    
+    logger.debug("query user : ", queryUser, { account }, {email})
     const user = await UserModel.findOne({
         $or: queryUser, status: TTCSconfig.STATUS_PUBLIC
     })
+    logger.debug("[send code]: user", user?._id)
     if (!user || !user.email) {
         return res.status(200).json({
             status: TTCSconfig.STATUS_NO_EXIST,
